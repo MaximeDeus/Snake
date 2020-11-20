@@ -4,6 +4,9 @@ import com.app.model.Movement;
 import com.app.model.Snake;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 
@@ -13,6 +16,9 @@ public class GameLayoutController {
     private App app;
     private int SNAKE_SIZE = 3;
     private Snake snake;
+    @FXML
+    private Canvas gameCanvas;
+    private GraphicsContext gc;
 
     /**
      * Is called by the main application to give a reference back to itself.
@@ -28,9 +34,10 @@ public class GameLayoutController {
     */
     @FXML
     public void initialize(){
-        // TODO remove print
-        System.out.println("Hello world");
         snake = new Snake(SNAKE_SIZE);
+        gc = gameCanvas.getGraphicsContext2D();
+        Image grid = new Image(String.valueOf(App.class.getResource("grid_600_400.png")));
+        gc.drawImage(grid,0,0);
     }
 
     /**
