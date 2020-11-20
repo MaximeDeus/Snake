@@ -5,8 +5,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -14,31 +16,45 @@ import java.io.IOException;
  */
 public class App extends Application {
 
+    private static Stage stage;
     private static Scene scene;
 
     @Override
     public void start(Stage stage) throws IOException {
-
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("rootLayout.fxml"));
-        AnchorPane root = fxmlLoader.load();
-
-        scene = new Scene(root);
-        stage.setTitle("Snake");
-        stage.setScene(scene);
-        stage.show();
+    this.stage = stage;
+    this.stage.setTitle("Snake");
+    initGameLayout();
     }
-/**
-    static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
-    }
- */
-/**
-    private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
-        return fxmlLoader.load();
-    }
- */
 
+    /**
+     * Initializes the game layout
+     */
+    public void initGameLayout(){
+        try {
+            // Load content of gameLayout.fxml file using his URL
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("gameLayout.fxml"));
+            // Load Node
+            AnchorPane root = loader.load();
+
+            // Load and Give the controller access to the main app.
+            GameLayoutController controller = loader.getController();
+            controller.setApp(this);
+
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public double getSceneWidth (){
+        return scene.getWidth();
+    }
+    public double getSceneHeight (){
+        return scene.getHeight();
+    }
     public static void main(String[] args) {
         launch();
     }
