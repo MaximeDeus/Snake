@@ -19,11 +19,14 @@ public class Snake {
     public Snake (int size) {
     double positionX = 0;
     double positionY = 0;
-    for (int i = 0 ; i < size ; i++){
+    // Construct the snake body (except head)
+    for (int i = 0 ; i < size -1; i++){
         body.add(new Point(positionX,positionY));
         // TODO replace these value, must be provided by external config (depend on grid size)
         positionX += 20;
     }
+    // Construct the snake head
+    body.add(new Head(positionX,positionY));
     }
 
     public ArrayList<Point> getBody (){
