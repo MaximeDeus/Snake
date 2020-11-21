@@ -24,3 +24,5 @@ hs_err_pid*
 
 # IntelliJ project settings folder (non IDE-specific)
 .idea
+# Exclude maven output folder when project is built (only sources must be inside repository)
+target
