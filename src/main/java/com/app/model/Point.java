@@ -8,7 +8,7 @@ import javafx.scene.image.Image;
  * A point represents a fragment of the snake
  */
 public class Point {
-    private Image image;
+    protected Image image;
     private double positionX;
     private double positionY;
 
