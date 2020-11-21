@@ -1,5 +1,6 @@
 package com.app;
 
+import com.app.model.Food;
 import com.app.model.Movement;
 import com.app.model.Point;
 import com.app.model.Snake;
@@ -41,6 +42,25 @@ public class GameLayoutController {
         gc.drawImage(grid,0,0);
         snake = new Snake(SNAKE_SIZE);
         Tools.drawSnake(gc,snake);
+    }
+
+    /**
+     * This function creates and display the food that must be eaten
+     */
+    public void generateFood(){
+        // TODO replace these value, must be provided by external config (depend on grid size)
+        int minX = 0;
+        int maxX = 30;
+        int minY = 0;
+        int maxY = 20;
+        int step = 20;
+        // Random value between 0*20, 1*20, ...20*20
+        double random_doubleX = (int)(Math.random() * (maxX - minX + 1) + minX) * step;
+        // Random value between 0*30, 1*30, ...20*30
+        double random_doubleY = (int)(Math.random() * (maxY - minY + 1) + minY) * step;
+        // Create and draw food
+        Point food = new Food(random_doubleX,random_doubleY);
+        Tools.draw(gc,food);
     }
 
     /**
@@ -86,8 +106,5 @@ public class GameLayoutController {
         body.remove(body.size()-1);
         snake.setHead(move);
     }
-
     // TODO add eat functionality
-    // TODO add food in random position
-
 }
