@@ -1,6 +1,7 @@
 package com.app;
 
 import com.app.model.Movement;
+import com.app.model.Point;
 import com.app.model.Snake;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
@@ -34,10 +35,12 @@ public class GameLayoutController {
     */
     @FXML
     public void initialize(){
-        snake = new Snake(SNAKE_SIZE);
         gc = gameCanvas.getGraphicsContext2D();
+
         Image grid = new Image(String.valueOf(App.class.getResource("grid_600_400.png")));
         gc.drawImage(grid,0,0);
+        snake = new Snake(SNAKE_SIZE);
+        Tools.drawSnake(gc,snake);
     }
 
     /**
@@ -53,8 +56,8 @@ public class GameLayoutController {
     public boolean isSnakeOutOfBound (){
         double width = app.getSceneWidth();
         double height = app.getSceneHeight();
-        double snakeHeadX = snake.getHead().getX();
-        double snakeHeadY = snake.getHead().getY();
+        double snakeHeadX = snake.getHead().getPositionX();
+        double snakeHeadY = snake.getHead().getPositionY();
 
         return snakeHeadX < 0 ||
                snakeHeadX >= width ||
@@ -78,24 +81,10 @@ public class GameLayoutController {
 
     // moving consist to remove the last point and add one as the new snake's head
     public void move (Movement move){
-        ArrayList<Point2D> body = snake.getBody();
+        ArrayList<Point> body = snake.getBody();
         // TODO replace line below with method snake.removeExtremity();
         body.remove(body.size()-1);
-        Point2D snakeHead = snake.getHead();
-        switch (move){
-            case UP:
-                body.add(snakeHead.add(0,-1));
-                break;
-            case DOWN:
-                body.add(snakeHead.add(0,1));
-                break;
-            case LEFT:
-                body.add(snakeHead.add(-1,0));
-                break;
-            case RIGHT:
-                body.add(snakeHead.add(1,0));
-                break;
-        }
+        snake.setHead(move);
     }
 
     // TODO add eat functionality
