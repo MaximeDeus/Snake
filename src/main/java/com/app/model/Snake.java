@@ -60,12 +60,8 @@ public class Snake {
         return (ArrayList<Point>) body.subList(1,body.size());
     }
 
-    public Point getExtremity(){
-        return body.get(body.size() - 1);
-    }
-
-    public Movement getDirection() {
-        return direction;
+    public void removeExtremity(){
+        body.remove(body.size()-1);
     }
 
     public void setDirection(Movement direction) {
