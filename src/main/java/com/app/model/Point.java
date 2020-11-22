@@ -37,4 +37,8 @@ public class Point {
     public void setPositionY(double positionY) {
         this.positionY = positionY;
     }
+
+    public boolean equals(Point p){
+        return this.positionX == p.positionX && this.positionY == p.positionY;
+    }
 }
