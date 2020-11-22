@@ -5,7 +5,6 @@ import com.app.model.Movement;
 import com.app.model.Point;
 import com.app.model.Snake;
 import javafx.fxml.FXML;
-import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -18,6 +17,7 @@ public class GameLayoutController {
     private App app;
     private int SNAKE_SIZE = 3;
     private Snake snake;
+    private Food food;
     @FXML
     private Canvas gameCanvas;
     private GraphicsContext gc;
@@ -37,7 +37,6 @@ public class GameLayoutController {
     @FXML
     public void initialize(){
         gc = gameCanvas.getGraphicsContext2D();
-
         Image grid = new Image(String.valueOf(App.class.getResource("grid_600_400.png")));
         gc.drawImage(grid,0,0);
         snake = new Snake(SNAKE_SIZE);
@@ -59,7 +58,7 @@ public class GameLayoutController {
         // Random value between 0*30, 1*30, ...20*30
         double random_doubleY = (int)(Math.random() * (maxY - minY + 1) + minY) * step;
         // Create and draw food
-        Point food = new Food(random_doubleX,random_doubleY);
+        food = new Food(random_doubleX,random_doubleY);
         Tools.draw(gc,food);
     }
 
@@ -67,10 +66,8 @@ public class GameLayoutController {
      * Check if the snake is eating or not
      * A snake is considered as eating iff the head is on the same position as the food
      */
-
-    public boolean isEating (Point2D p){
-        // TODO add delta if equality not works
-        return p.equals(snake.getHead());
+    public boolean isEating (){
+        return snake.getHead().equals(food);
     }
 
     public boolean isSnakeOutOfBound (){
@@ -86,7 +83,13 @@ public class GameLayoutController {
     }
 
     public boolean isSnakeCollision (){
-        return snake.getTail().contains(snake.getHead());
+        Point snakeHead = snake.getHead();
+        for (Point p : snake.getTail()){
+            if (snakeHead.equals(p)){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -99,12 +102,16 @@ public class GameLayoutController {
         return !(isSnakeCollision() || isSnakeOutOfBound());
     }
 
-    // moving consist to remove the last point and add one as the new snake's head
     public void move (Movement move){
-        ArrayList<Point> body = snake.getBody();
-        // TODO replace line below with method snake.removeExtremity();
-        body.remove(body.size()-1);
-        snake.setHead(move);
+        if (isMoveValid(move)) {
+            // moving consist to remove the last point and add one as the new snake's head
+            snake.setHead(move);
+            if (!isEating()) {
+                snake.removeExtremity();
+            }
+        }
+        else{
+            // TODO throw game over method (clear game & display popup)
+        }
     }
-    // TODO add eat functionality
 }
