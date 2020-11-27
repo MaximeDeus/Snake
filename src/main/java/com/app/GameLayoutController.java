@@ -114,17 +114,13 @@ public void startGame(){
         int minY = 0;
         int maxY = 19;
         int step = 20;
-        // Random value between 0*20, 1*20, ...29*20
-        // TODO replace + 3 with + MARGIN
-        double random_doubleX = (int) (Math.random() * (maxX - minX + 1) + minX) * step + 3;
-        // Random value between 0*20, 1*20, ...19*20
-        double random_doubleY = (int)(Math.random() * (maxY - minY + 1) + minY) * step + 3;
-         food = new Food(random_doubleX, random_doubleY);
-        // Create food until it is in a different place as the snake
-        while(isFoodOnTheSamePlaceAsTheSnake()) {
-            // TODO CLEAN this ugly method **
-            random_doubleX = (int) (Math.random() * (maxX - minX + 1) + minX) * step + 3;
-            random_doubleY = (int)(Math.random() * (maxY - minY + 1) + minY) * step + 3;
+        // Create food until it is in a different place as the snake or if food has not been generated yet
+        while(food == null || isFoodOnTheSamePlaceAsTheSnake()) {
+            // TODO replace + 3 with + MARGIN
+            // Random value between 0*20, 1*20, ...29*20
+            double random_doubleX = (int) (Math.random() * (maxX - minX + 1) + minX) * step + 3;
+            // Random value between 0*20, 1*20, ...19*20
+            double random_doubleY = (int)(Math.random() * (maxY - minY + 1) + minY) * step + 3;
 
             food = new Food(random_doubleX, random_doubleY);
         }
@@ -141,7 +137,6 @@ public void startGame(){
     }
     public boolean isFoodOnTheSamePlaceAsTheSnake(){
         boolean res = false;
-        // ** TODO Add condition for checking if food is defined ? (for avoiding error food is null on init method)
         for (Point p : snake.getBody()){
             if (food.equals(p)){
                 res = true;
