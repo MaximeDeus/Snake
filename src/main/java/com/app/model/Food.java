@@ -6,6 +6,6 @@ import javafx.scene.image.Image;
 public class Food extends Point{
     public Food(double x, double y) {
         super(x, y);
-        image = new Image(String.valueOf(App.class.getResource("food_apple.png")),20,20,false,false);
+        image = new Image(String.valueOf(App.class.getResource("food_apple.png")),15,15,false,false);
     }
 }

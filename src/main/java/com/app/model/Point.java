@@ -13,7 +13,7 @@ public class Point {
     private double positionY;
 
     public Point(double x, double y){
-        image = new Image(String.valueOf(App.class.getResource("snake_body_point.png")),20,20,false,false);
+        image = new Image(String.valueOf(App.class.getResource("snake_body_point.png")),15,15,false,false);
         positionX = x;
         positionY = y;
     }

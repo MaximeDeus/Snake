@@ -11,7 +11,7 @@ import javafx.scene.image.Image;
 public class Head extends Point{
     public Head(double x, double y) {
         super(x, y);
-        image = new Image(String.valueOf(App.class.getResource("snake_head.png")),20,20,false,false);
+        image = new Image(String.valueOf(App.class.getResource("snake_head.png")),15,15,false,false);
 
     }
 }
