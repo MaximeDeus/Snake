@@ -2,9 +2,12 @@ package com.app;
 
 import com.app.model.*;
 import javafx.animation.AnimationTimer;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import org.apache.commons.lang3.EnumUtils;
 
@@ -18,6 +21,9 @@ public class GameLayoutController {
     private AnimationTimer game;
     @FXML
     private Canvas gameCanvas;
+    @FXML
+    private Label scoreLabel;
+    private IntegerProperty score = new SimpleIntegerProperty(0);
     private GraphicsContext gc;
     // Only 1 direction update is allowed for 1 frame
     private boolean hasDirectionChanged = false;
@@ -96,12 +102,17 @@ public void startGame(){
         gc = gameCanvas.getGraphicsContext2D();
         Image grid = new Image(String.valueOf(App.class.getResource("grid_600_400.png")));
         gc.drawImage(grid,0,0);
+        scoreLabel.textProperty().bind(score.asString());
         snake = new Snake(SNAKE_SIZE);
         Tools.drawSnake(gc,snake);
         generateFood();
         initKeyEvent();
         initGame();
         startGame();
+    }
+
+    public void incrementScore(){
+        score.set(score.get()+1);
     }
 
     /**
@@ -213,8 +224,9 @@ public void startGame(){
                 Tools.clear(gc, snake.getExtremity());
                 snake.removeExtremity();
                 }
-            // If the snake found food, generates a new one instead of remove his extremity
+            // If the snake found food, increment score and generates a new one instead of remove his extremity
             else{
+                incrementScore();
                 generateFood();
                 }
         }

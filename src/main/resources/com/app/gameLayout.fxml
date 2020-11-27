@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
-
+<?import javafx.scene.layout.HBox?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="background" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.GameLayoutController">
    <children>
       <Canvas fx:id="gameCanvas" height="400.0" width="600.0" />
+      <HBox layoutX="430.0" layoutY="302.0" prefHeight="20.0" prefWidth="74.0" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
+         <children>
+            <Label text="Score :" />
+            <Label fx:id="scoreLabel" />
+         </children>
+      </HBox>
    </children>
 </AnchorPane>
