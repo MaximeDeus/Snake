@@ -17,8 +17,8 @@ public class Snake {
 
 
     public Snake (int size) {
-    double positionX = 0;
-    double positionY = 0;
+    double positionX = 3;
+    double positionY = 3;
     // Construct the snake body (except head)
     for (int i = 0 ; i < size -1; i++){
         body.add(new Point(positionX,positionY));
@@ -34,37 +34,24 @@ public class Snake {
     }
 
     public Point getHead () {
+        return body.get(body.size()-1);
+    }
+    public Point getExtremity () {
         return body.get(0);
     }
 
-    public void setHead(Movement move){
-        Point newHead = this.getHead();
-        switch (move){
-            case UP:
-                newHead.setPositionY(newHead.getPositionY()-20);
-                break;
-            case DOWN:
-                newHead.setPositionY(newHead.getPositionY()+20);
-                break;
-            case LEFT:
-                newHead.setPositionX(newHead.getPositionX()-20);
-                break;
-            case RIGHT:
-                newHead.setPositionX(newHead.getPositionX()+20);;
-                break;
-        }
-        body.add(newHead);
-    }
-
     public ArrayList<Point> getTail () {
-        return (ArrayList<Point>) body.subList(1,body.size());
+        return new ArrayList (body.subList(0,body.size()-1));
     }
 
     public void removeExtremity(){
-        body.remove(body.size()-1);
+        body.remove(0);
     }
 
     public void setDirection(Movement direction) {
         this.direction = direction;
+    }
+    public Movement getDirection() {
+        return direction;
     }
 }
