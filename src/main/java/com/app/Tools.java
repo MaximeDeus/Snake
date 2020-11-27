@@ -11,6 +11,12 @@ public class Tools {
         gc.drawImage(p.getImage(), p.getPositionX(), p.getPositionY());
     }
 
+    public static void clear(GraphicsContext gc, Point p )
+    {
+        // TODO replace values (cf config)
+        gc.clearRect(p.getPositionX(), p.getPositionY(), 15,15);
+    }
+
     public static void drawSnake(GraphicsContext gc, Snake snake )
     {
         for (Point p : snake.getBody()) {
