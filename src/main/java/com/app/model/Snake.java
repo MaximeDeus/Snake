@@ -1,7 +1,5 @@
 package com.app.model;
 
-import javafx.geometry.Point2D;
-
 import java.util.ArrayList;
 
 /**
@@ -13,7 +11,7 @@ public class Snake {
 
     // ATTRIBUTES
     private ArrayList <Point> body = new ArrayList<>();
-    private Movement direction = Movement.RIGHT;
+    private Direction direction = Direction.RIGHT;
 
 
     public Snake (int size) {
@@ -48,10 +46,10 @@ public class Snake {
         body.remove(0);
     }
 
-    public void setDirection(Movement direction) {
+    public void setDirection(Direction direction) {
         this.direction = direction;
     }
-    public Movement getDirection() {
+    public Direction getDirection() {
         return direction;
     }
 }

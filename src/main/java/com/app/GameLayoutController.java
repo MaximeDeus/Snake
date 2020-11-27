@@ -37,28 +37,28 @@ public void initKeyEvent() {
                 keyEvent -> {
                     String keyValue = keyEvent.getCode().toString();
                     // Check if the input is valid (otherwise error will be thrown)
-                    if (EnumUtils.isValidEnum(Movement.class, keyValue)){
-                    Movement direction = Movement.valueOf(keyValue);
+                    if (EnumUtils.isValidEnum(Direction.class, keyValue)){
+                    Direction direction = Direction.valueOf(keyValue);
                     if (isValidDirection(direction) && !hasDirectionChanged) {
-                        snake.setDirection(Movement.valueOf(keyEvent.getCode().toString()));
+                        snake.setDirection(Direction.valueOf(keyEvent.getCode().toString()));
                         hasDirectionChanged = true;
                     }
                     }
                 });
 }
-    public boolean isValidDirection (Movement mouvement){
-        Movement snakeDirection = snake.getDirection();
+    public boolean isValidDirection (Direction direction){
+        Direction snakeDirection = snake.getDirection();
         boolean res = false;
-        switch (mouvement){
-            // If UP or DOWN, only horizontal movements are allowed
+        switch (direction){
+            // If UP or DOWN, only horizontal directions are allowed
             case UP:
             case DOWN:
-                res = snakeDirection.equals(Movement.LEFT) || snakeDirection.equals(Movement.RIGHT);
+                res = snakeDirection.equals(Direction.LEFT) || snakeDirection.equals(Direction.RIGHT);
                 break;
-            // If LEFT or RIGHT, only vertical movements are allowed
+            // If LEFT or RIGHT, only vertical directions are allowed
             case LEFT:
             case RIGHT:
-                res = snakeDirection.equals(Movement.UP) || snakeDirection.equals(Movement.DOWN);
+                res = snakeDirection.equals(Direction.UP) || snakeDirection.equals(Direction.DOWN);
                 break;
         }
         return res;
@@ -173,9 +173,9 @@ public void startGame(){
     }
 
     /**
-     * Check if the movement is possible
+     * Check if the move is possible
      * If not, i.e the snake hit something (a wall or himself), the game is over
-     * @return True if the movement is possible, False otherwise
+     * @return True if the move is possible, False otherwise
      */
     public boolean isMoveValid (){
         return !(isSnakeCollision() || isSnakeOutOfBound());
