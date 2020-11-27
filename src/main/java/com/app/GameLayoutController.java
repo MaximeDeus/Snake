@@ -1,15 +1,12 @@
 package com.app;
 
-import com.app.model.Food;
-import com.app.model.Movement;
-import com.app.model.Point;
-import com.app.model.Snake;
+import com.app.model.*;
+import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-
-import java.util.ArrayList;
+import org.apache.commons.lang3.EnumUtils;
 
 public class GameLayoutController {
 
@@ -18,9 +15,12 @@ public class GameLayoutController {
     private int SNAKE_SIZE = 3;
     private Snake snake;
     private Food food;
+    private AnimationTimer game;
     @FXML
     private Canvas gameCanvas;
     private GraphicsContext gc;
+    // Only 1 direction update is allowed for 1 frame
+    private boolean hasDirectionChanged = false;
 
     /**
      * Is called by the main application to give a reference back to itself.
@@ -30,6 +30,63 @@ public class GameLayoutController {
     public void setApp(App application) {
         this.app = application;
 }
+public void initKeyEvent() {
+        gameCanvas.setFocusTraversable(true);
+        gameCanvas.setOnKeyPressed(
+                // Anonymous EventHandler
+                keyEvent -> {
+                    String keyValue = keyEvent.getCode().toString();
+                    // Check if the input is valid (otherwise error will be thrown)
+                    if (EnumUtils.isValidEnum(Movement.class, keyValue)){
+                    Movement direction = Movement.valueOf(keyValue);
+                    if (isValidDirection(direction) && !hasDirectionChanged) {
+                        snake.setDirection(Movement.valueOf(keyEvent.getCode().toString()));
+                        hasDirectionChanged = true;
+                    }
+                    }
+                });
+}
+    public boolean isValidDirection (Movement mouvement){
+        Movement snakeDirection = snake.getDirection();
+        boolean res = false;
+        switch (mouvement){
+            // If UP or DOWN, only horizontal movements are allowed
+            case UP:
+            case DOWN:
+                res = snakeDirection.equals(Movement.LEFT) || snakeDirection.equals(Movement.RIGHT);
+                break;
+            // If LEFT or RIGHT, only vertical movements are allowed
+            case LEFT:
+            case RIGHT:
+                res = snakeDirection.equals(Movement.UP) || snakeDirection.equals(Movement.DOWN);
+                break;
+        }
+        return res;
+    }
+public void initGame() {
+    game = new AnimationTimer() {
+
+        private long lastUpdate = 0;
+
+        @Override
+        public void handle(long now) {
+            // update every second
+            double seconds = (double) (now - lastUpdate) / 1_000_000_000.0;
+            if (seconds >= 0.1 ) {
+                move();
+                lastUpdate = now;
+                hasDirectionChanged = false;
+            }
+        }
+    };
+}
+
+public void startGame(){
+        game.start();
+}
+    public void stopGame(){
+        game.stop();
+    }
 
     /**
     * TODO
@@ -41,6 +98,10 @@ public class GameLayoutController {
         gc.drawImage(grid,0,0);
         snake = new Snake(SNAKE_SIZE);
         Tools.drawSnake(gc,snake);
+        generateFood();
+        initKeyEvent();
+        initGame();
+        startGame();
     }
 
     /**
@@ -49,17 +110,26 @@ public class GameLayoutController {
     public void generateFood(){
         // TODO replace these value, must be provided by external config (depend on grid size)
         int minX = 0;
-        int maxX = 30;
+        int maxX = 29;
         int minY = 0;
-        int maxY = 20;
+        int maxY = 19;
         int step = 20;
-        // Random value between 0*20, 1*20, ...20*20
-        double random_doubleX = (int)(Math.random() * (maxX - minX + 1) + minX) * step;
-        // Random value between 0*30, 1*30, ...20*30
-        double random_doubleY = (int)(Math.random() * (maxY - minY + 1) + minY) * step;
-        // Create and draw food
-        food = new Food(random_doubleX,random_doubleY);
+        // Random value between 0*20, 1*20, ...29*20
+        // TODO replace + 3 with + MARGIN
+        double random_doubleX = (int) (Math.random() * (maxX - minX + 1) + minX) * step + 3;
+        // Random value between 0*20, 1*20, ...19*20
+        double random_doubleY = (int)(Math.random() * (maxY - minY + 1) + minY) * step + 3;
+         food = new Food(random_doubleX, random_doubleY);
+        // Create food until it is in a different place as the snake
+        while(isFoodOnTheSamePlaceAsTheSnake()) {
+            // TODO CLEAN this ugly method **
+            random_doubleX = (int) (Math.random() * (maxX - minX + 1) + minX) * step + 3;
+            random_doubleY = (int)(Math.random() * (maxY - minY + 1) + minY) * step + 3;
+
+            food = new Food(random_doubleX, random_doubleY);
+        }
         Tools.draw(gc,food);
+
     }
 
     /**
@@ -68,6 +138,16 @@ public class GameLayoutController {
      */
     public boolean isEating (){
         return snake.getHead().equals(food);
+    }
+    public boolean isFoodOnTheSamePlaceAsTheSnake(){
+        boolean res = false;
+        // ** TODO Add condition for checking if food is defined ? (for avoiding error food is null on init method)
+        for (Point p : snake.getBody()){
+            if (food.equals(p)){
+                res = true;
+            }
+        }
+        return res;
     }
 
     public boolean isSnakeOutOfBound (){
@@ -95,23 +175,57 @@ public class GameLayoutController {
     /**
      * Check if the movement is possible
      * If not, i.e the snake hit something (a wall or himself), the game is over
-     * @param move the player movement
      * @return True if the movement is possible, False otherwise
      */
-    public boolean isMoveValid (Movement move){
+    public boolean isMoveValid (){
         return !(isSnakeCollision() || isSnakeOutOfBound());
     }
 
-    public void move (Movement move){
-        if (isMoveValid(move)) {
-            // moving consist to remove the last point and add one as the new snake's head
-            snake.setHead(move);
-            if (!isEating()) {
-                snake.removeExtremity();
-            }
+    /** a move consist to :
+     * Move the head in function of current snake Direction
+     * Replace by a Point the old head position (+1)
+     * If snake is not eating, remove the last point (-1)
+     */
+    public void move (){
+        // Update data structure
+        Point head = snake.getHead();
+        // Create a clone of the head, for clearing old head (*)
+        Head headCopy = new Head(head.getPositionX(), head.getPositionY());
+        Point point = new Point(head.getPositionX(), head.getPositionY());
+        snake.getBody().add(snake.getBody().size()-1, point); // TODO in snake model create method insertPointAfterSnakeHead returning the inserted Point
+        switch (snake.getDirection()){ // TODO replace 20 value (cf config)
+            case UP:
+                head.setPositionY(head.getPositionY()-20);
+                break;
+            case DOWN:
+                head.setPositionY(head.getPositionY()+20);
+                break;
+            case LEFT:
+                head.setPositionX(head.getPositionX()-20);
+                break;
+            case RIGHT:
+                head.setPositionX(head.getPositionX()+20);
+                break;
         }
+        // Check if move is valid before drawing move (otherwise game over)
+        if (isMoveValid()) {
+            // Clear old head (*) picture before replacing with a Point (because they may not have the same size)
+            Tools.clear(gc,headCopy);
+            Tools.draw(gc,point);
+            Tools.draw(gc,head);
+            // Food not found
+            if (!isEating()) {
+                Tools.clear(gc, snake.getExtremity());
+                snake.removeExtremity();
+                }
+            // If the snake found food, generates a new one instead of remove his extremity
+            else{
+                generateFood();
+                }
+        }
+        // Game over
         else{
-            // TODO throw game over method (clear game & display popup)
+            stopGame();
         }
     }
 }
