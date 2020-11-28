@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import org.apache.commons.lang3.EnumUtils;
 
+// TODO rename GameController
 public class GameLayoutController {
 
     // Reference to the main application.
@@ -23,11 +24,10 @@ public class GameLayoutController {
     private Canvas gameCanvas;
     @FXML
     private Label scoreLabel;
-    private IntegerProperty score = new SimpleIntegerProperty(0);
+    private IntegerProperty score = new SimpleIntegerProperty();
     private GraphicsContext gc;
     // Only 1 direction update is allowed for 1 frame
     private boolean hasDirectionChanged = false;
-
     /**
      * Is called by the main application to give a reference back to itself.
      *
@@ -36,7 +36,7 @@ public class GameLayoutController {
     public void setApp(App application) {
         this.app = application;
 }
-public void initKeyEvent() {
+    public void initKeyEvent() {
         gameCanvas.setFocusTraversable(true);
         gameCanvas.setOnKeyPressed(
                 // Anonymous EventHandler
@@ -69,28 +69,42 @@ public void initKeyEvent() {
         }
         return res;
     }
+
+public void initGrid(){
+    gc = gameCanvas.getGraphicsContext2D();
+    // TODO move to Tools class
+    gc.clearRect(0,0,400,600);
+    Image grid = new Image(String.valueOf(App.class.getResource("grid_600_400.png")));
+    gc.drawImage(grid,0,0);
+}
 public void initGame() {
-    game = new AnimationTimer() {
+        score.set(0);
+        food = null;
+        scoreLabel.textProperty().bind(score.asString());
+        snake = new Snake(SNAKE_SIZE);
+        Tools.drawSnake(gc,snake);
+        generateFood();
 
-        private long lastUpdate = 0;
+        game = new AnimationTimer() {
+            private long lastUpdate = 0;
 
-        @Override
-        public void handle(long now) {
-            // update every second
-            double seconds = (double) (now - lastUpdate) / 1_000_000_000.0;
-            if (seconds >= 0.1 ) {
-                move();
-                lastUpdate = now;
-                hasDirectionChanged = false;
+            @Override
+            public void handle(long now) {
+                // update every tenth of second
+                double seconds = (double) (now - lastUpdate) / 1_000_000_000.0;
+                if (seconds >= 0.1 ) {
+                    move();
+                    lastUpdate = now;
+                    hasDirectionChanged = false;
+                }
             }
-        }
     };
 }
 
 public void startGame(){
         game.start();
 }
-    public void stopGame(){
+public void stopGame(){
         game.stop();
     }
 
@@ -99,16 +113,8 @@ public void startGame(){
     */
     @FXML
     public void initialize(){
-        gc = gameCanvas.getGraphicsContext2D();
-        Image grid = new Image(String.valueOf(App.class.getResource("grid_600_400.png")));
-        gc.drawImage(grid,0,0);
-        scoreLabel.textProperty().bind(score.asString());
-        snake = new Snake(SNAKE_SIZE);
-        Tools.drawSnake(gc,snake);
-        generateFood();
+        initGrid();
         initKeyEvent();
-        initGame();
-        startGame();
     }
 
     public void incrementScore(){
@@ -233,6 +239,7 @@ public void startGame(){
         // Game over
         else{
             stopGame();
+            app.showMenuLayout();
         }
     }
 }
