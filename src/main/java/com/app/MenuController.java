@@ -9,6 +9,8 @@ public class MenuController {
     private GameLayoutController gameLayoutController;
     @FXML
     private Label lastScoreLabel;
+    @FXML
+    private Label bestScoreLabel;
 
     @FXML
     public void initialize(){}
@@ -29,8 +31,14 @@ public class MenuController {
         app.hideMenuLayout();
     }
 
-    public void updateScore(int score){
+    public void updateLastScore(int score){
         // Not necessary to bind Game Controller score
         lastScoreLabel.textProperty().set(Integer.toString(score));
+        updateBestScore(score);
+    }
+    public void updateBestScore(int score){
+        if (Integer.valueOf(bestScoreLabel.textProperty().get()) < score){
+            bestScoreLabel.textProperty().set(String.valueOf(score));
+        }
     }
 }

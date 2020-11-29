@@ -8,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
 import javafx.scene.image.Image;
 import org.apache.commons.lang3.EnumUtils;
 
@@ -243,7 +242,7 @@ public void stopGame(){
         // Game over
         else{
             stopGame();
-            menuController.updateScore(score.get());
+            menuController.updateLastScore(score.get());
             app.showMenuLayout();
         }
     }

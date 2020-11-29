@@ -24,7 +24,7 @@
             <HBox alignment="CENTER" spacing="10.0">
                <children>
                   <Label text="Best Score" />
-                  <Label text="10" />
+                  <Label fx:id="bestScoreLabel" text="0" />
                </children>
             </HBox>
          </children>
