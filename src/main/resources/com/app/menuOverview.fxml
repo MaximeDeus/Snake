@@ -15,7 +15,7 @@
             <HBox alignment="CENTER" spacing="10.0">
                <children>
                   <Label text="Last Score" />
-                  <Label text="0" />
+                  <Label fx:id="lastScoreLabel" text="0" />
                </children>
                <HBox.margin>
                   <Insets />

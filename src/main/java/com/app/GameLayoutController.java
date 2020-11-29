@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
 import javafx.scene.image.Image;
 import org.apache.commons.lang3.EnumUtils;
 
@@ -28,6 +29,8 @@ public class GameLayoutController {
     private GraphicsContext gc;
     // Only 1 direction update is allowed for 1 frame
     private boolean hasDirectionChanged = false;
+    private MenuController menuController;
+
     /**
      * Is called by the main application to give a reference back to itself.
      *
@@ -36,6 +39,7 @@ public class GameLayoutController {
     public void setApp(App application) {
         this.app = application;
 }
+    public void setController (MenuController controller) { menuController = controller; }
     public void initKeyEvent() {
         gameCanvas.setFocusTraversable(true);
         gameCanvas.setOnKeyPressed(
@@ -239,6 +243,7 @@ public void stopGame(){
         // Game over
         else{
             stopGame();
+            menuController.updateScore(score.get());
             app.showMenuLayout();
         }
     }

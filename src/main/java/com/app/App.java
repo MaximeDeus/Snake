@@ -40,7 +40,6 @@ public class App extends Application {
             // Load and Give the controller access to the main app.
             gameLayoutController = loader.getController();
             gameLayoutController.setApp(this);
-
             gameScene = new Scene(root);
             gameStage.setScene(gameScene);
             gameStage.show();
@@ -55,6 +54,7 @@ public class App extends Application {
         FXMLLoader loader = new FXMLLoader(App.class.getResource("menuOverview.fxml"));
         BorderPane borderPane = loader.load();
         menuController = loader.getController();
+        gameLayoutController.setController(menuController);
         menuController.setController(gameLayoutController);
         menuController.setApp(this);
 
