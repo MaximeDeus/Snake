@@ -34,3 +34,7 @@
 .button:hover {
     -fx-border-color: white;
 }
+
+.slider .axis {
+    -fx-tick-label-fill: white;
+}
