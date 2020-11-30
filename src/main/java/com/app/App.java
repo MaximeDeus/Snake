@@ -14,11 +14,15 @@ import java.io.IOException;
  */
 public class App extends Application {
 
-    private static Stage gameStage;
-    private static Scene gameScene;
-    private static Stage menuStage;
+    private Stage gameStage;
+    private Stage menuOrOptionStage;
+    private Scene gameScene;
+    private Scene menuScene;
+    private Scene optionScene;
     private GameLayoutController gameLayoutController;
     private MenuController menuController;
+    private OptionController optionController;
+
 
     @Override
     public void start(Stage stage){
@@ -44,6 +48,7 @@ public class App extends Application {
             gameStage.setScene(gameScene);
             gameStage.show();
             initMenuLayout();
+            initOptionLayout();
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -58,19 +63,35 @@ public class App extends Application {
         menuController.setController(gameLayoutController);
         menuController.setApp(this);
 
-        menuStage = new Stage();
-        Scene scene = new Scene(borderPane);
-        menuStage.setScene(scene);
-        menuStage.initOwner(gameStage);
-        menuStage.initModality(Modality.APPLICATION_MODAL);
+        menuOrOptionStage = new Stage();
+        menuScene = new Scene(borderPane);
+        menuOrOptionStage.setScene(menuScene);
+        menuOrOptionStage.initOwner(gameStage);
+        menuOrOptionStage.initModality(Modality.APPLICATION_MODAL);
         showMenuLayout();
     }
 
+    public void initOptionLayout() throws IOException {
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("optionOverview.fxml"));
+        AnchorPane anchorPane = loader.load();
+        optionController = loader.getController();
+        optionController.setController(gameLayoutController);
+        optionController.setApp(this);
+        optionScene = new Scene(anchorPane);
+    }
+
+    public void loadMenuScene(){
+        menuOrOptionStage.setScene(menuScene);
+    }
+    public void loadOptionScene(){
+        menuOrOptionStage.setScene(optionScene);
+    }
+
     public void showMenuLayout(){
-        menuStage.show();
+        menuOrOptionStage.show();
     }
     public void hideMenuLayout(){
-        menuStage.hide();
+        menuOrOptionStage.hide();
     }
 
     public double getSceneWidth (){
