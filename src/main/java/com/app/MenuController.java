@@ -2,6 +2,8 @@ package com.app;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class MenuController {
 
@@ -11,9 +13,13 @@ public class MenuController {
     private Label lastScoreLabel;
     @FXML
     private Label bestScoreLabel;
+    @FXML
+    ImageView imageView;
 
     @FXML
-    public void initialize(){}
+    public void initialize(){
+        imageView.setImage(new Image(String.valueOf(App.class.getResource("snake-logo.png"))));
+    }
 
     public void setController (GameLayoutController controller){
         gameLayoutController = controller;
