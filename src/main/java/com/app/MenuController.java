@@ -47,4 +47,9 @@ public class MenuController {
             bestScoreLabel.textProperty().set(String.valueOf(score));
         }
     }
+
+    @FXML
+    public void handleOptions(){
+        app.loadOptionScene();
+    }
 }
