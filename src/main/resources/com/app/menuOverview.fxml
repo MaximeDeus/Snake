@@ -37,7 +37,7 @@
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                <children>
                   <Button id="dark-blue" mnemonicParsing="false" onAction="#handlePlay" text="Play" />
-                  <Button id="dark-blue" mnemonicParsing="false" text="Options" />
+                  <Button id="dark-blue" mnemonicParsing="false" onAction="#handleOptions" text="Options" />
                </children>
             </HBox>
          </children>
