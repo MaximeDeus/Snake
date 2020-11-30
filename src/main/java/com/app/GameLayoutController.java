@@ -9,6 +9,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import org.apache.commons.lang3.EnumUtils;
 
 // TODO rename GameController
@@ -245,5 +246,20 @@ public void stopGame(){
             menuController.updateLastScore(score.get());
             app.showMenuLayout();
         }
+    }
+
+    public void setHeadColor(Color value) {
+        // TODO
+        System.out.println("HEAD COLOR SET");
+    }
+
+    public void setBodyColor(Color value) {
+        // TODO
+        System.out.println("BODY COLOR SET");
+    }
+
+    public void setSpeed(double value) {
+        // TODO
+        System.out.println("SPEED SET");
     }
 }
