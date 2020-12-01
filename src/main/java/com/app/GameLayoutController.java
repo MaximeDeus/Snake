@@ -17,7 +17,6 @@ public class GameLayoutController {
 
     // Reference to the main application.
     private App app;
-    private int SNAKE_SIZE = 3;
     private Snake snake;
     private Food food;
     private AnimationTimer game;
@@ -30,6 +29,7 @@ public class GameLayoutController {
     // Only 1 direction update is allowed for 1 frame
     private boolean hasDirectionChanged = false;
     private MenuController menuController;
+    private double speed;
 
     /**
      * Is called by the main application to give a reference back to itself.
@@ -85,7 +85,7 @@ public void initGame() {
         score.set(0);
         food = null;
         scoreLabel.textProperty().bind(score.asString());
-        snake = new Snake(SNAKE_SIZE);
+        snake = new Snake();
         Tools.drawSnake(gc,snake);
         generateFood();
 
@@ -96,7 +96,7 @@ public void initGame() {
             public void handle(long now) {
                 // update every tenth of second
                 double seconds = (double) (now - lastUpdate) / 1_000_000_000.0;
-                if (seconds >= 0.1 ) {
+                if (seconds >= (0.55 - speed) ) {
                     move();
                     lastUpdate = now;
                     hasDirectionChanged = false;
@@ -145,7 +145,7 @@ public void stopGame(){
 
             food = new Food(random_doubleX, random_doubleY);
         }
-        Tools.draw(gc,food);
+        Tools.drawFood(gc,food);
 
     }
 
@@ -227,8 +227,8 @@ public void stopGame(){
         if (isMoveValid()) {
             // Clear old head (*) picture before replacing with a Point (because they may not have the same size)
             Tools.clear(gc,headCopy);
-            Tools.draw(gc,point);
-            Tools.draw(gc,head);
+            Tools.drawPoint(gc,point);
+            Tools.drawHead(gc,head);
             // Food not found
             if (!isEating()) {
                 Tools.clear(gc, snake.getExtremity());
@@ -248,18 +248,15 @@ public void stopGame(){
         }
     }
 
-    public void setHeadColor(Color value) {
-        // TODO
-        System.out.println("HEAD COLOR SET");
+    public void setHeadColor(Color color) {
+        Head.setColor(color);
     }
 
-    public void setBodyColor(Color value) {
-        // TODO
-        System.out.println("BODY COLOR SET");
+    public void setBodyColor(Color color) {
+        Point.setColor(color);
     }
 
-    public void setSpeed(double value) {
-        // TODO
-        System.out.println("SPEED SET");
+    public void setSpeed(double s) {
+        speed = s/20;
     }
 }
