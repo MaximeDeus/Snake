@@ -9,7 +9,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 import org.apache.commons.lang3.EnumUtils;
 
 // TODO rename GameController
@@ -29,7 +28,7 @@ public class GameLayoutController {
     // Only 1 direction update is allowed for 1 frame
     private boolean hasDirectionChanged = false;
     private MenuController menuController;
-    private double speed;
+    private double speed = 0.12; // default speed value
 
     /**
      * Is called by the main application to give a reference back to itself.
@@ -94,9 +93,8 @@ public void initGame() {
 
             @Override
             public void handle(long now) {
-                // update every tenth of second
-                double seconds = (double) (now - lastUpdate) / 1_000_000_000.0;
-                if (seconds >= (0.55 - speed) ) {
+                double elapsedTimeInSeconds = (double) (now - lastUpdate) / 1_000_000_000.0;
+                if (elapsedTimeInSeconds >= speed ) {
                     move();
                     lastUpdate = now;
                     hasDirectionChanged = false;
@@ -244,19 +242,13 @@ public void stopGame(){
         else{
             stopGame();
             menuController.updateLastScore(score.get());
+            app.hideGameLayout();
             app.showMenuLayout();
         }
     }
 
-    public void setHeadColor(Color color) {
-        Head.setColor(color);
-    }
-
-    public void setBodyColor(Color color) {
-        Point.setColor(color);
-    }
-
     public void setSpeed(double s) {
-        speed = s/20;
+        // 0.2, 0.18... 0.02 second for each frame (5 to 50 frames per second)
+        speed = 0.22 - s*2/100;
     }
 }

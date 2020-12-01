@@ -34,6 +34,7 @@ public class MenuController {
         gameLayoutController.initGrid();
         gameLayoutController.initGame();
         gameLayoutController.startGame();
+        app.showGameLayout();
         app.hideMenuLayout();
     }
 

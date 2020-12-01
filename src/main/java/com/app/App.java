@@ -25,10 +25,13 @@ public class App extends Application {
 
 
     @Override
-    public void start(Stage stage){
+    public void start(Stage stage) throws IOException {
     this.gameStage = stage;
     this.gameStage.setTitle("Snake");
     initGameLayout();
+    initMenuLayout();
+    initOptionLayout();
+    showMenuLayout();
     }
 
     /**
@@ -46,11 +49,8 @@ public class App extends Application {
             gameLayoutController.setApp(this);
             gameScene = new Scene(root);
             gameStage.setScene(gameScene);
-            gameStage.show();
-            initMenuLayout();
-            initOptionLayout();
-        }
-        catch (IOException e) {
+
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -68,7 +68,6 @@ public class App extends Application {
         menuOrOptionStage.setScene(menuScene);
         menuOrOptionStage.initOwner(gameStage);
         menuOrOptionStage.initModality(Modality.APPLICATION_MODAL);
-        showMenuLayout();
     }
 
     public void initOptionLayout() throws IOException {
@@ -86,6 +85,9 @@ public class App extends Application {
     public void loadOptionScene(){
         menuOrOptionStage.setScene(optionScene);
     }
+
+    public void showGameLayout(){ gameStage.show(); }
+    public void hideGameLayout(){ gameStage.hide(); }
 
     public void showMenuLayout(){
         menuOrOptionStage.show();

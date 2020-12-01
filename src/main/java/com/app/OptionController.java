@@ -1,8 +1,11 @@
 package com.app;
 
+import com.app.model.Head;
+import com.app.model.Point;
 import javafx.fxml.FXML;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Slider;
+import javafx.scene.paint.Color;
 
 public class OptionController {
 
@@ -16,7 +19,11 @@ public class OptionController {
     private Slider slider;
 
     @FXML
-    public void initialize(){ }
+    public void initialize(){
+        // Load default snake colors when starting app (i.e before launching first game)
+        Head.setColor(headColor.getValue());
+        Point.setColor(bodyColor.getValue());
+    }
 
     public void setApp(App application) {
         this.app = application;
@@ -26,10 +33,12 @@ public class OptionController {
         gameLayoutController = controller;
     }
 
+
+
     @FXML
     public void handleOK(){
-        gameLayoutController.setHeadColor(headColor.getValue());
-        gameLayoutController.setBodyColor(bodyColor.getValue());
+        Head.setColor(headColor.getValue());
+        Point.setColor(bodyColor.getValue());
         gameLayoutController.setSpeed(slider.getValue());
         app.loadMenuScene();
     }
