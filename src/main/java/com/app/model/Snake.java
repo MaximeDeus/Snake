@@ -1,5 +1,7 @@
 package com.app.model;
 
+import javafx.scene.paint.Color;
+
 import java.util.ArrayList;
 
 /**
@@ -14,11 +16,11 @@ public class Snake {
     private Direction direction = Direction.RIGHT;
 
 
-    public Snake (int size) {
+    public Snake () {
     double positionX = 3;
     double positionY = 3;
     // Construct the snake body (except head)
-    for (int i = 0 ; i < size -1; i++){
+    for (int i = 0 ; i < 3; i++){
         body.add(new Point(positionX,positionY));
         // TODO replace these value, must be provided by external config (depend on grid size)
         positionX += 20;
