@@ -1,7 +1,6 @@
 package com.app.model;
 
-import com.app.App;
-import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 
 /**
  * Class Head
@@ -9,9 +8,17 @@ import javafx.scene.image.Image;
  * (Only picture vary from Point model)
  */
 public class Head extends Point{
+
+    private static Color color;
     public Head(double x, double y) {
         super(x, y);
-        image = new Image(String.valueOf(App.class.getResource("snake_head.png")),15,15,false,false);
+    }
 
+    public static void setColor (Color c){
+        color = c;
+    }
+
+    public static Color getColor() {
+        return color;
     }
 }
