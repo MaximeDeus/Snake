@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.paint.Color?>
 <AnchorPane id="dark-blue" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" stylesheets="@darkBlueTheme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.OptionController">
    <children>
       <VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -19,6 +20,9 @@
                      <children>
                         <Label text="Head Color" />
                         <ColorPicker fx:id="headColor">
+                           <value>
+                              <Color blue="0.0" green="0.0" red="1.0" />
+                           </value>
                            <HBox.margin>
                               <Insets top="-3.0" />
                            </HBox.margin>
@@ -28,7 +32,11 @@
                   <HBox prefHeight="100.0" prefWidth="200.0" spacing="35.0">
                      <children>
                         <Label text="Body Color" />
-                        <ColorPicker fx:id="bodyColor" />
+                        <ColorPicker fx:id="bodyColor">
+                        <value>
+                           <Color blue="0.28" green="0.91" red="0.28" />
+                        </value>
+                        </ColorPicker>
                      </children>
                   </HBox>
                   <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
