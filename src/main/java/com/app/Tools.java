@@ -1,16 +1,32 @@
 package com.app;
 
+import com.app.model.Food;
+import com.app.model.Head;
 import com.app.model.Point;
 import com.app.model.Snake;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 // TODO rename to DrawTools
 public class Tools {
 
-    // TODO rename to DrawPoint
-    public static void draw(GraphicsContext gc, Point p )
+    public static void drawPoint(GraphicsContext gc, Point p)
     {
-        gc.drawImage(p.getImage(), p.getPositionX(), p.getPositionY());
+        gc.setFill(Point.getColor());
+        // TODO replace values (cf config)
+        gc.fillRect(p.getPositionX(), p.getPositionY(), 15,15);
+    }
+
+    public static void drawHead(GraphicsContext gc, Point p)
+    {
+        gc.setFill(Head.getColor());
+        // TODO replace values (cf config)
+        gc.fillRect(p.getPositionX(), p.getPositionY(), 15,15);
+    }
+
+    public static void drawFood(GraphicsContext gc, Food f)
+    {
+        gc.drawImage(f.getImage(), f.getPositionX(), f.getPositionY());
     }
 
     // TODO rename to clearPoint
@@ -24,8 +40,9 @@ public class Tools {
 
     public static void drawSnake(GraphicsContext gc, Snake snake )
     {
-        for (Point p : snake.getBody()) {
-            draw(gc,p);
+        for (Point p : snake.getTail()) {
+            drawPoint(gc,p);
         }
+        drawHead(gc,snake.getHead());
     }
 }
