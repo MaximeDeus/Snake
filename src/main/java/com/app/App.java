@@ -57,7 +57,7 @@ public class App extends Application {
     }
 
     public void initMenuLayout() throws IOException {
-        FXMLLoader loader = new FXMLLoader(App.class.getResource("menuOverview.fxml"));
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("menuView.fxml"));
         BorderPane borderPane = loader.load();
         menuController = loader.getController();
         gameController.setController(menuController);
