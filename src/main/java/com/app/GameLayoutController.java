@@ -8,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import org.apache.commons.lang3.EnumUtils;
 
 // TODO rename GameController
@@ -22,6 +21,8 @@ public class GameLayoutController {
     @FXML
     private Canvas gameCanvas;
     @FXML
+    private Canvas gridCanvas;
+    @FXML
     private Label scoreLabel;
     private IntegerProperty score = new SimpleIntegerProperty();
     private GraphicsContext gc;
@@ -29,6 +30,7 @@ public class GameLayoutController {
     private boolean hasDirectionChanged = false;
     private MenuController menuController;
     private double speed = 0.12; // default speed value
+    private String gridColor = "White"; // default grid value
 
     /**
      * Is called by the main application to give a reference back to itself.
@@ -74,17 +76,15 @@ public class GameLayoutController {
     }
 
 public void initGrid(){
-    gc = gameCanvas.getGraphicsContext2D();
-    // TODO move to Tools class
-    gc.clearRect(0,0,400,600);
-    Image grid = new Image(String.valueOf(App.class.getResource("grid_600_400.png")));
-    gc.drawImage(grid,0,0);
+    Tools.drawGrid(gridCanvas.getGraphicsContext2D(), gridColor);
 }
 public void initGame() {
         score.set(0);
         food = null;
         scoreLabel.textProperty().bind(score.asString());
         snake = new Snake();
+        // Clear previous game
+        Tools.clear(gc);
         Tools.drawSnake(gc,snake);
         generateFood();
 
@@ -115,6 +115,7 @@ public void stopGame(){
     */
     @FXML
     public void initialize(){
+        gc = gameCanvas.getGraphicsContext2D();
         initGrid();
         initKeyEvent();
     }
@@ -224,12 +225,12 @@ public void stopGame(){
         // Check if move is valid before drawing move (otherwise game over)
         if (isMoveValid()) {
             // Clear old head (*) picture before replacing with a Point (because they may not have the same size)
-            Tools.clear(gc,headCopy);
+            Tools.clearPoint(gc,headCopy);
             Tools.drawPoint(gc,point);
             Tools.drawHead(gc,head);
             // Food not found
             if (!isEating()) {
-                Tools.clear(gc, snake.getExtremity());
+                Tools.clearPoint(gc, snake.getExtremity());
                 snake.removeExtremity();
                 }
             // If the snake found food, increment score and generates a new one instead of remove his extremity
@@ -250,5 +251,9 @@ public void stopGame(){
     public void setSpeed(double s) {
         // 0.2, 0.18... 0.02 second for each frame (5 to 50 frames per second)
         speed = 0.22 - s*2/100;
+    }
+
+    public void setGridColor(String gridColor) {
+        this.gridColor = gridColor;
     }
 }
