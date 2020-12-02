@@ -39,8 +39,8 @@ public class App extends Application {
      */
     public void initGameLayout(){
         try {
-            // Load content of gameLayout.fxml file using his URL
-            FXMLLoader loader = new FXMLLoader(App.class.getResource("gameLayout.fxml"));
+            // Load content of gameView.fxml file using his URL
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("gameView.fxml"));
             // Load Node
             AnchorPane root = loader.load();
 
