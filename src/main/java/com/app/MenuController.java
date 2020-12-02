@@ -8,7 +8,7 @@ import javafx.scene.image.ImageView;
 public class MenuController {
 
     private App app;
-    private GameLayoutController gameLayoutController;
+    private GameController gameController;
     @FXML
     private Label lastScoreLabel;
     @FXML
@@ -21,8 +21,8 @@ public class MenuController {
         imageView.setImage(new Image(String.valueOf(App.class.getResource("snake-logo.png"))));
     }
 
-    public void setController (GameLayoutController controller){
-        gameLayoutController = controller;
+    public void setController (GameController controller){
+        gameController = controller;
     }
 
     public void setApp(App application) {
@@ -31,9 +31,9 @@ public class MenuController {
 
     @FXML
     public void handlePlay(){
-        gameLayoutController.initGrid();
-        gameLayoutController.initGame();
-        gameLayoutController.startGame();
+        gameController.initGrid();
+        gameController.initGame();
+        gameController.startGame();
         app.showGameLayout();
         app.hideMenuLayout();
     }

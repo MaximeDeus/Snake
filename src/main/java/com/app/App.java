@@ -19,7 +19,7 @@ public class App extends Application {
     private Scene gameScene;
     private Scene menuScene;
     private Scene optionScene;
-    private GameLayoutController gameLayoutController;
+    private GameController gameController;
     private MenuController menuController;
     private OptionController optionController;
 
@@ -45,8 +45,8 @@ public class App extends Application {
             AnchorPane root = loader.load();
 
             // Load and Give the controller access to the main app.
-            gameLayoutController = loader.getController();
-            gameLayoutController.setApp(this);
+            gameController = loader.getController();
+            gameController.setApp(this);
             gameScene = new Scene(root);
             gameStage.setScene(gameScene);
             gameStage.setResizable(false);
@@ -60,8 +60,8 @@ public class App extends Application {
         FXMLLoader loader = new FXMLLoader(App.class.getResource("menuOverview.fxml"));
         BorderPane borderPane = loader.load();
         menuController = loader.getController();
-        gameLayoutController.setController(menuController);
-        menuController.setController(gameLayoutController);
+        gameController.setController(menuController);
+        menuController.setController(gameController);
         menuController.setApp(this);
 
         menuOrOptionStage = new Stage();
@@ -76,7 +76,7 @@ public class App extends Application {
         FXMLLoader loader = new FXMLLoader(App.class.getResource("optionOverview.fxml"));
         AnchorPane anchorPane = loader.load();
         optionController = loader.getController();
-        optionController.setController(gameLayoutController);
+        optionController.setController(gameController);
         optionController.setApp(this);
         optionScene = new Scene(anchorPane);
     }

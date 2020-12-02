@@ -10,8 +10,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import org.apache.commons.lang3.EnumUtils;
 
-// TODO rename GameController
-public class GameLayoutController {
+public class GameController {
 
     // Reference to the main application.
     private App app;

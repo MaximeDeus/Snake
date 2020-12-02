@@ -4,12 +4,11 @@ import com.app.model.Head;
 import com.app.model.Point;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.paint.Color;
 
 public class OptionController {
 
     private App app;
-    private GameLayoutController gameLayoutController;
+    private GameController gameController;
     @FXML
     private ColorPicker headColor;
     @FXML
@@ -30,8 +29,8 @@ public class OptionController {
         this.app = application;
     }
 
-    public void setController (GameLayoutController controller){
-        gameLayoutController = controller;
+    public void setController (GameController controller){
+        gameController = controller;
     }
 
 
@@ -40,9 +39,9 @@ public class OptionController {
     public void handleOK(){
         Head.setColor(headColor.getValue());
         Point.setColor(bodyColor.getValue());
-        gameLayoutController.setSpeed(slider.getValue());
+        gameController.setSpeed(slider.getValue());
         RadioButton radiobutton = (RadioButton) gridToggleGroup.getSelectedToggle();
-        gameLayoutController.setGridColor(radiobutton.getText());
+        gameController.setGridColor(radiobutton.getText());
         app.loadMenuScene();
     }
 
