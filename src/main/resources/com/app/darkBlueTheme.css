@@ -38,3 +38,10 @@
 .slider .axis {
     -fx-tick-label-fill: white;
 }
+
+.radio-button {
+    -fx-text-fill: white;
+    -fx-rotate: 180;
+}
+
+.radio-button > .text { -fx-rotate: 180; }

@@ -3,8 +3,7 @@ package com.app;
 import com.app.model.Head;
 import com.app.model.Point;
 import javafx.fxml.FXML;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 
 public class OptionController {
@@ -17,6 +16,8 @@ public class OptionController {
     private ColorPicker bodyColor;
     @FXML
     private Slider slider;
+    @FXML
+    private ToggleGroup gridToggleGroup;
 
     @FXML
     public void initialize(){
@@ -40,6 +41,8 @@ public class OptionController {
         Head.setColor(headColor.getValue());
         Point.setColor(bodyColor.getValue());
         gameLayoutController.setSpeed(slider.getValue());
+        RadioButton radiobutton = (RadioButton) gridToggleGroup.getSelectedToggle();
+        gameLayoutController.setGridColor(radiobutton.getText());
         app.loadMenuScene();
     }
 
