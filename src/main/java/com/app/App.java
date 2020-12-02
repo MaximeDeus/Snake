@@ -73,7 +73,7 @@ public class App extends Application {
     }
 
     public void initOptionLayout() throws IOException {
-        FXMLLoader loader = new FXMLLoader(App.class.getResource("optionOverview.fxml"));
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("optionView.fxml"));
         AnchorPane anchorPane = loader.load();
         optionController = loader.getController();
         optionController.setController(gameController);
