@@ -5,6 +5,7 @@ import com.app.model.Head;
 import com.app.model.Point;
 import com.app.model.Snake;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
 // TODO rename to DrawTools
@@ -30,7 +31,7 @@ public class Tools {
     }
 
     // TODO rename to clearPoint
-    public static void clear(GraphicsContext gc, Point p )
+    public static void clearPoint(GraphicsContext gc, Point p )
     {
         // TODO replace values (cf config)
         gc.clearRect(p.getPositionX(), p.getPositionY(), 15,15);
@@ -44,5 +45,25 @@ public class Tools {
             drawPoint(gc,p);
         }
         drawHead(gc,snake.getHead());
+    }
+
+    public static void drawGrid(GraphicsContext gc, String color){
+        // TODO replace height/width by config values
+        clear(gc);
+        String gridColor = "";
+        switch (color){
+            case "Dark":
+                gridColor = "dark_grid_600_400.png";
+                break;
+            case "White":
+                gridColor = "white_grid_600_400.png";
+                break;
+        }
+        Image grid = new Image(String.valueOf(App.class.getResource(gridColor)));
+        gc.drawImage(grid,0,0);
+    }
+
+    public static void clear(GraphicsContext gc) {
+        gc.clearRect(0,0,600,400);
     }
 }
