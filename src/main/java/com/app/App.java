@@ -49,6 +49,7 @@ public class App extends Application {
             gameLayoutController.setApp(this);
             gameScene = new Scene(root);
             gameStage.setScene(gameScene);
+            gameStage.setResizable(false);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -68,6 +69,7 @@ public class App extends Application {
         menuOrOptionStage.setScene(menuScene);
         menuOrOptionStage.initOwner(gameStage);
         menuOrOptionStage.initModality(Modality.APPLICATION_MODAL);
+        menuOrOptionStage.setResizable(false);
     }
 
     public void initOptionLayout() throws IOException {
