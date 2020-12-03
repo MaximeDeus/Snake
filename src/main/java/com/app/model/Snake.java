@@ -1,6 +1,6 @@
 package com.app.model;
 
-import javafx.scene.paint.Color;
+import com.app.Config;
 
 import java.util.ArrayList;
 
@@ -22,8 +22,7 @@ public class Snake {
     // Construct the snake body (except head)
     for (int i = 0 ; i < 3; i++){
         body.add(new Point(positionX,positionY));
-        // TODO replace these value, must be provided by external config (depend on grid size)
-        positionX += 20;
+        positionX += Config.ELEMENT_SPACING;
     }
     // Construct the snake head
     body.add(new Head(positionX,positionY));
@@ -53,5 +52,9 @@ public class Snake {
     }
     public Direction getDirection() {
         return direction;
+    }
+
+    public void insertPointAfterSnakeHead(Point point) {
+        this.body.add(this.body.size()-1, point);
     }
 }
