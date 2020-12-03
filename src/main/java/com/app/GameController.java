@@ -75,7 +75,7 @@ public class GameController {
     }
 
 public void initGrid(){
-    Tools.drawGrid(gridCanvas.getGraphicsContext2D(), gridColor);
+    DrawTools.drawGrid(gridCanvas.getGraphicsContext2D(), gridColor);
 }
 public void initGame() {
         score.set(0);
@@ -83,8 +83,8 @@ public void initGame() {
         scoreLabel.textProperty().bind(score.asString());
         snake = new Snake();
         // Clear previous game
-        Tools.clear(gc);
-        Tools.drawSnake(gc,snake);
+        DrawTools.clear(gc);
+        DrawTools.drawSnake(gc,snake);
         generateFood();
 
         game = new AnimationTimer() {
@@ -143,7 +143,7 @@ public void stopGame(){
 
             food = new Food(random_doubleX, random_doubleY);
         }
-        Tools.drawFood(gc,food);
+        DrawTools.drawFood(gc,food);
 
     }
 
@@ -224,12 +224,12 @@ public void stopGame(){
         // Check if move is valid before drawing move (otherwise game over)
         if (isMoveValid()) {
             // Clear old head (*) picture before replacing with a Point (because they may not have the same size)
-            Tools.clearPoint(gc,headCopy);
-            Tools.drawPoint(gc,point);
-            Tools.drawHead(gc,head);
+            DrawTools.clearPoint(gc,headCopy);
+            DrawTools.drawPoint(gc,point);
+            DrawTools.drawHead(gc,head);
             // Food not found
             if (!isEating()) {
-                Tools.clearPoint(gc, snake.getExtremity());
+                DrawTools.clearPoint(gc, snake.getExtremity());
                 snake.removeExtremity();
                 }
             // If the snake found food, increment score and generates a new one instead of remove his extremity

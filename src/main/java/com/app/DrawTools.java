@@ -9,7 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
 // TODO rename to DrawTools
-public class Tools {
+public class DrawTools {
 
     public static void drawPoint(GraphicsContext gc, Point p)
     {
