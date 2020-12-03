@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 /**
  * Class Head
  * Represents the head of the snake
- * (Only picture vary from Point model)
+ * (Only Color vary from Point model)
  */
 public class Head extends Point{
 

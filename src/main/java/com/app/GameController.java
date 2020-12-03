@@ -129,13 +129,12 @@ public void stopGame(){
         int minY = 0;
         int maxY = (int) (Config.STAGE_HEIGHT / Config.ELEMENT_SPACING) - 1;;
         int step = Config.ELEMENT_SPACING;
-        int margin = 3;
         // Create food until it is in a different place as the snake or if food has not been generated yet
         while(food == null || isFoodOnTheSamePlaceAsTheSnake()) {
             // Random value between 0*20, 1*20, ...29*20
-            double random_doubleX = (int) (Math.random() * (maxX - minX + 1) + minX) * step + margin;
+            double random_doubleX = (int) (Math.random() * (maxX - minX + 1) + minX) * step + Config.ELEMENT_MARGIN;;
             // Random value between 0*20, 1*20, ...19*20
-            double random_doubleY = (int)(Math.random() * (maxY - minY + 1) + minY) * step + margin;
+            double random_doubleY = (int)(Math.random() * (maxY - minY + 1) + minY) * step + Config.ELEMENT_MARGIN;;
 
             food = new Food(random_doubleX, random_doubleY);
         }

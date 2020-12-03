@@ -17,8 +17,8 @@ public class Snake {
 
 
     public Snake () {
-    double positionX = 3;
-    double positionY = 3;
+    double positionX = Config.ELEMENT_MARGIN;
+    double positionY = Config.ELEMENT_MARGIN;
     // Construct the snake body (except head)
     for (int i = 0 ; i < 3; i++){
         body.add(new Point(positionX,positionY));
