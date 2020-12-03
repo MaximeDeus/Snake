@@ -6,23 +6,18 @@ import com.app.model.Point;
 import com.app.model.Snake;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
-
-// TODO rename to DrawTools
 public class DrawTools {
 
     public static void drawPoint(GraphicsContext gc, Point p)
     {
         gc.setFill(Point.getColor());
-        // TODO replace values (cf config)
-        gc.fillRect(p.getPositionX(), p.getPositionY(), 15,15);
+        gc.fillRect(p.getPositionX(), p.getPositionY(), Config.ELEMENT_HEIGHT,Config.ELEMENT_WIDTH);
     }
 
     public static void drawHead(GraphicsContext gc, Point p)
     {
         gc.setFill(Head.getColor());
-        // TODO replace values (cf config)
-        gc.fillRect(p.getPositionX(), p.getPositionY(), 15,15);
+        gc.fillRect(p.getPositionX(), p.getPositionY(),Config.ELEMENT_HEIGHT,Config.ELEMENT_WIDTH);
     }
 
     public static void drawFood(GraphicsContext gc, Food f)
@@ -30,14 +25,10 @@ public class DrawTools {
         gc.drawImage(f.getImage(), f.getPositionX(), f.getPositionY());
     }
 
-    // TODO rename to clearPoint
     public static void clearPoint(GraphicsContext gc, Point p )
     {
-        // TODO replace values (cf config)
-        gc.clearRect(p.getPositionX(), p.getPositionY(), 15,15);
+        gc.clearRect(p.getPositionX(), p.getPositionY(), Config.ELEMENT_HEIGHT,Config.ELEMENT_WIDTH);
     }
-
-    // TODO add method drawGrid/Clear grid
 
     public static void drawSnake(GraphicsContext gc, Snake snake )
     {
@@ -48,7 +39,6 @@ public class DrawTools {
     }
 
     public static void drawGrid(GraphicsContext gc, String color){
-        // TODO replace height/width by config values
         clear(gc);
         String gridColor = "";
         switch (color){
@@ -64,6 +54,6 @@ public class DrawTools {
     }
 
     public static void clear(GraphicsContext gc) {
-        gc.clearRect(0,0,600,400);
+        gc.clearRect(0,0,Config.STAGE_WIDTH,Config.STAGE_HEIGHT);
     }
 }

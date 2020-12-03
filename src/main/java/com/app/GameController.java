@@ -109,9 +109,6 @@ public void stopGame(){
         game.stop();
     }
 
-    /**
-    * TODO
-    */
     @FXML
     public void initialize(){
         gc = gameCanvas.getGraphicsContext2D();
@@ -127,19 +124,18 @@ public void stopGame(){
      * This function creates and display the food that must be eaten
      */
     public void generateFood(){
-        // TODO replace these value, must be provided by external config (depend on grid size)
         int minX = 0;
-        int maxX = 29;
+        int maxX =(int) (Config.STAGE_WIDTH / Config.ELEMENT_SPACING) - 1;
         int minY = 0;
-        int maxY = 19;
-        int step = 20;
+        int maxY = (int) (Config.STAGE_HEIGHT / Config.ELEMENT_SPACING) - 1;;
+        int step = Config.ELEMENT_SPACING;
+        int margin = 3;
         // Create food until it is in a different place as the snake or if food has not been generated yet
         while(food == null || isFoodOnTheSamePlaceAsTheSnake()) {
-            // TODO replace + 3 with + MARGIN
             // Random value between 0*20, 1*20, ...29*20
-            double random_doubleX = (int) (Math.random() * (maxX - minX + 1) + minX) * step + 3;
+            double random_doubleX = (int) (Math.random() * (maxX - minX + 1) + minX) * step + margin;
             // Random value between 0*20, 1*20, ...19*20
-            double random_doubleY = (int)(Math.random() * (maxY - minY + 1) + minY) * step + 3;
+            double random_doubleY = (int)(Math.random() * (maxY - minY + 1) + minY) * step + margin;
 
             food = new Food(random_doubleX, random_doubleY);
         }
@@ -165,8 +161,8 @@ public void stopGame(){
     }
 
     public boolean isSnakeOutOfBound (){
-        double width = app.getSceneWidth();
-        double height = app.getSceneHeight();
+        double width = Config.STAGE_WIDTH;
+        double height = Config.STAGE_HEIGHT;
         double snakeHeadX = snake.getHead().getPositionX();
         double snakeHeadY = snake.getHead().getPositionY();
 
@@ -206,19 +202,19 @@ public void stopGame(){
         // Create a clone of the head, for clearing old head (*)
         Head headCopy = new Head(head.getPositionX(), head.getPositionY());
         Point point = new Point(head.getPositionX(), head.getPositionY());
-        snake.getBody().add(snake.getBody().size()-1, point); // TODO in snake model create method insertPointAfterSnakeHead returning the inserted Point
-        switch (snake.getDirection()){ // TODO replace 20 value (cf config)
+        snake.insertPointAfterSnakeHead(point);
+        switch (snake.getDirection()){
             case UP:
-                head.setPositionY(head.getPositionY()-20);
+                head.setPositionY(head.getPositionY()-Config.ELEMENT_SPACING);
                 break;
             case DOWN:
-                head.setPositionY(head.getPositionY()+20);
+                head.setPositionY(head.getPositionY()+Config.ELEMENT_SPACING);
                 break;
             case LEFT:
-                head.setPositionX(head.getPositionX()-20);
+                head.setPositionX(head.getPositionX()-Config.ELEMENT_SPACING);
                 break;
             case RIGHT:
-                head.setPositionX(head.getPositionX()+20);
+                head.setPositionX(head.getPositionX()+Config.ELEMENT_SPACING);
                 break;
         }
         // Check if move is valid before drawing move (otherwise game over)
