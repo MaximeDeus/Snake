@@ -98,12 +98,6 @@ public class App extends Application {
         menuOrOptionStage.hide();
     }
 
-    public double getSceneWidth (){
-        return gameScene.getWidth();
-    }
-    public double getSceneHeight (){
-        return gameScene.getHeight();
-    }
     public static void main(String[] args) {
         launch();
     }
