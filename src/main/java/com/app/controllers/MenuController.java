@@ -1,5 +1,7 @@
-package com.app;
+package com.app.controllers;
 
+import com.app.App;
+import com.app.controllers.GameController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;

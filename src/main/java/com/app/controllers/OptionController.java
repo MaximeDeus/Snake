@@ -1,5 +1,7 @@
-package com.app;
+package com.app.controllers;
 
+import com.app.App;
+import com.app.controllers.GameController;
 import com.app.model.Head;
 import com.app.model.Point;
 import javafx.fxml.FXML;

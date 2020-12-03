@@ -4,5 +4,6 @@ module com.app {
     requires org.apache.commons.lang3;
 
     opens com.app to javafx.fxml;
+    opens com.app.controllers to javafx.fxml;
     exports com.app;
 }

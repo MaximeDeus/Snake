@@ -1,5 +1,7 @@
-package com.app;
+package com.app.utils;
 
+import com.app.App;
+import com.app.Config;
 import com.app.model.Food;
 import com.app.model.Head;
 import com.app.model.Point;

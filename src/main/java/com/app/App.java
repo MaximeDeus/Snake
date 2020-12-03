@@ -1,5 +1,8 @@
 package com.app;
 
+import com.app.controllers.GameController;
+import com.app.controllers.MenuController;
+import com.app.controllers.OptionController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

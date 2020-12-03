@@ -1,5 +1,8 @@
-package com.app;
+package com.app.controllers;
 
+import com.app.App;
+import com.app.Config;
+import com.app.utils.DrawTools;
 import com.app.model.*;
 import javafx.animation.AnimationTimer;
 import javafx.beans.property.IntegerProperty;
