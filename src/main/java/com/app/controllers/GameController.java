@@ -11,7 +11,8 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
-import org.apache.commons.lang3.EnumUtils;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class GameController {
 
@@ -50,7 +51,9 @@ public class GameController {
                 keyEvent -> {
                     String keyValue = keyEvent.getCode().toString();
                     // Check if the input is valid (otherwise error will be thrown)
-                    if (EnumUtils.isValidEnum(Direction.class, keyValue)){
+                    if (Stream.of(Direction.values())
+                            .map(Direction::name)
+                            .collect(Collectors.toList()).contains(keyValue)){
                     Direction direction = Direction.valueOf(keyValue);
                     if (isValidDirection(direction) && !hasDirectionChanged) {
                         snake.setDirection(Direction.valueOf(keyEvent.getCode().toString()));
