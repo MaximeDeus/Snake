@@ -26,4 +26,4 @@ executable: jar runtime-image
 	--module-path  "lib" \
 	--main-jar Snake.jar \
 	--runtime-image target/image \
-	--win-shortcut --win-console
+	--win-shortcut
