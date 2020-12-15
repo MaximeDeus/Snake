@@ -2,17 +2,20 @@ NAME="Snake"
 DESCRIPTION="A snake game"
 VENDOR="Maxime DEROISSART"
 VERSION="1.0"
-OUTPUT="out"
+OUTPUT=out
 
 all: executable
 
 clean:
 	mvn clean ; rm -rf $(OUTPUT)
 
-runtime:
+jar:
+	mvn compile assembly:single
+
+runtime-image:
 	mvn javafx:jlink
 
-executable: runtime
+executable: jar runtime-image
 	jpackage --type exe \
 	--name $(NAME) \
 	--description $(DESCRIPTION) \
@@ -21,6 +24,6 @@ executable: runtime
 	--input target \
 	--dest $(OUTPUT) \
 	--module-path  "lib" \
-	--main-jar Snake_jar/Snake.jar \
+	--main-jar Snake.jar \
 	--runtime-image target/image \
-	--win-shortcut
+	--win-shortcut --win-console
