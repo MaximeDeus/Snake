@@ -27,6 +27,9 @@ run_with_jar: jar
 runtime-image:
 	mvn javafx:jlink
 
+run_with_runtime_image: runtime-image
+	./target/image/bin/java -m com.app/com.app.App #[main class opt] [module][main class ref])
+
 executable: jar runtime-image
 	jpackage --type exe \
 	--name $(NAME) \
