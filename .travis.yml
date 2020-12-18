@@ -1,5 +1,2 @@
 language: java
-install: true  #Skip the installation step
-script:
-  - mvn javafx:compile
-  - mvn test
+script: mvn test
